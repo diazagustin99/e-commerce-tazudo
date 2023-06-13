@@ -1,0 +1,3 @@
+img/productos/*
+img/categorias/*
+img/noticias/*

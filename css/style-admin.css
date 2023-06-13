@@ -1,0 +1,599 @@
+html {
+    font-family: 'Monserrat', sans-serif;
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@media all and (min-width: 320px) {
+
+
+
+}
+@media all and (min-width: 720px){
+    .asidemenu-admin{
+        min-width: 15%;
+        min-height: 100%;
+        background-color: #ef6500;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid #ad4800;
+    }
+
+    .top-menuadmin{
+        height: 15vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        background-color: #ad4800;
+    }
+    .opcion-menu{
+        height: 3rem;
+        width: 100%;
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #ad4800;
+        font-size: 1.1rem;
+    }
+
+    .opcion-menu > a{
+        text-decoration: none;
+        color: white;
+    }
+
+    .opcion-menu > svg{
+        color: white;
+        height: 1.3rem;
+        margin-right: 0.3rem;
+    }
+
+    .aside-main{
+        min-width: 100vw;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: row;
+    }
+    .aside-main > main{
+        min-width: 85%;
+        min-height: 100%;
+    }
+
+    .aside-main > main > header{
+        height: 15vh;
+        font-size: 6rem;
+        color: #ad4800;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    }
+
+    .acciones-admin{
+        height: 8vh;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-top: 2px solid rgb(229, 229, 229);
+        border-bottom: 2px solid rgb(229, 229, 229);
+        padding: 1rem;
+    }
+
+    .acciones-admin select{
+        padding: 0.3rem;
+        margin-right: 0.2rem;
+    }
+
+    .btn-agregar{
+        border-radius: 5px;
+        padding: 1rem;
+        background-color: #198754;
+        color: white;
+        margin-right: 0.5rem;
+        cursor: pointer;
+    }
+
+    .btn-filtrar{
+        border-radius: 5px;
+        padding: 0.3rem;
+        background-color: white;
+        cursor: pointer;
+    }
+
+    .filtrar{
+        border-radius: 5px;
+        padding: 0.7rem;
+        background-color: #ecdd55;
+        margin-right: 0.5rem;
+    }
+
+    .busqueda{
+        background-color: cornflowerblue;
+        color: white;
+        padding: 0.73rem;
+    }
+
+    .busqueda input{
+        padding: 0.3rem;
+    }
+
+    .contenedor-tabla-prods{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .tabla-productos{
+        border-collapse: collapse;
+        margin-top: 1rem;
+        border-radius: 5px 5px 0px 0px;
+        overflow: hidden;
+    }
+
+    .tabla-productos th{
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .tabla-productos thead{
+        background-color: #ad4800;
+        color: white;
+        
+    }
+
+    .tabla-productos tbody tr{
+        text-align: center;
+    }
+
+    .tabla-productos tbody tr td{
+        padding: 1rem;
+    }
+
+    .tabla-productos tbody tr:nth-child(even){
+        background-color: rgb(229, 229, 229);
+    }
+
+    .td-prod{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+    }
+
+    .td-prod figure{
+        height: 3rem;
+        width: 3rem;
+        border-radius: 50%;
+        margin-right: 0.4rem;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .td-prod img{
+        width: 100%;
+    }
+
+
+
+    .btn-accion{
+        background-color: #ad4800;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 3px;
+        cursor: pointer;
+    }
+
+    .btn-accion svg{
+        color: white;
+        margin: 4px;
+    }
+
+    /*CSS MODAL*/
+    h2{
+        font-size: 2rem;
+        color: #ad4800;
+        margin-bottom: 1.5rem;
+        
+    }
+
+
+    .modal{
+        background-color: white;
+        width: 45vw;
+        padding: 1rem;
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.246);
+        position: relative;
+        text-align: start;
+    }
+
+
+    .contenedormodal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        z-index: 999;
+        background-color: rgba(0, 0, 0, 0.589);
+        pointer-events: none;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        opacity: 0;
+    }
+
+    .show{
+        pointer-events: auto;
+        opacity: 1;
+    }
+
+    .contenedor-botoncerrar{
+        display: flex;
+        position:absolute;
+        top: 0;
+        right: 0;
+        margin: 0.5rem;
+    }
+    
+    #btn-cerrar{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: red;
+        color: white;
+        padding: 0.5rem;
+        border-radius: 10px;
+        cursor: pointer;
+        
+    }
+    /*FIN CSS MODAL*/
+
+    /*CSS FORM*/
+
+
+    .mostrar{
+        display: inline;
+    }
+
+    .form-crear{
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        text-align: left;
+    }
+
+    .form-crear > label, .cont-select > label{
+        font-size: 1.2rem;
+        color: #ef6500;
+        font-weight: bold;
+
+    }
+
+    .form-crear > input:not(input[type=file]):not(input[type=textarea]) {
+        margin-bottom: 1rem;
+        margin-top: 0.3rem;
+        width: 100%;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ef6500;
+    }
+
+    textarea{
+        margin-bottom: 1rem;
+        margin-top: 0.3rem;
+        padding: 0.5rem;
+        width: 100%;
+        border: 1px solid #ef6500;
+        overflow-y: scroll;
+        resize: vertical;
+        color: #ef6500;
+        outline: none;
+        max-height: 8rem;
+    } 
+
+    .cont-select{
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+        margin-bottom: 1rem;
+        margin-top: 0.3rem;
+        width: 100%;
+    }
+
+    .cont-select > select{
+        min-width: 60%;
+        color: #ad4800;
+    }
+
+    .cont-select > label{
+        width: 40%;
+    }
+
+    #boton{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 2rem;
+    }
+
+    #boton > input{
+        background-color: #198754;
+        color: white;
+        padding: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        
+    }
+
+
+    /* Estilo para el switch */
+.apple-switch input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .apple-switch{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+  
+  /* Estilo para la etiqueta de texto */
+  .apple-switch .label-text {
+    
+  }
+  
+  /* Estilo para el slider */
+  .apple-switch .slider {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    margin-right: 0.5rem;
+    background-color: #ccc;
+    border-radius: 13px;
+    transition: background-color .3s;
+  }
+  
+  /* Estilo para el slider después de marcado */
+  .apple-switch input[type="checkbox"]:checked + .slider {
+    background-color: #4cd964;
+  }
+  
+  /* Estilo para el punto dentro del slider */
+  .apple-switch .slider::before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform .3s;
+  }
+  
+  /* Estilo para el punto dentro del slider después de marcado */
+  .apple-switch input[type="checkbox"]:checked + .slider::before {
+    transform: translateX(24px);
+  }
+
+  /*INPUT DE FOTO*/
+  .input-container {
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    border: 2px dashed #ccc;
+    background-color: #f9f9f9;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  .input-container input[type="file"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+
+  }
+  .input-container img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .input-container .remove-image {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 0.6rem;
+    font-size: 0.3rem;
+    color: #fff;
+    background-color: #f44336;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  .input-container:hover .remove-image {
+    opacity: 1;
+  }
+
+  /*CSS MODAL ELIMINAR PROD*/
+  .card-prod-elim{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: whitesmoke;
+    border: 1px solid rgb(226, 226, 226);
+    padding: 1rem;
+    text-align: center;
+    border-radius: 10px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+
+  }
+  .card-prod-elim figure{
+    width: 90%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .card-prod-elim figure img{
+    width: 100%;
+    border-radius: 50%;
+  }
+
+  .card-prod-elim > h3{
+    color: #ef6500;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-prod-elim > p{
+    color: #ad4800;
+  }
+
+  #btn-eliminar-conf{
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: 1px solid #ef6500;
+    cursor: pointer;
+    color: #ef6500;
+    text-decoration: none;
+  }
+
+  #btn-eliminar-cancelar{
+    cursor: pointer;
+    padding: 0.5rem;
+    background-color: #ef6500;
+    color: white;
+    border-radius: 10px;
+  }
+
+
+  /*INICIO DE SESION*/
+  .main-sesion{
+    background-color: #ef6500;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contenedor-form-sesion{
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    width: 20vw;
+  }
+
+  .form-sesion{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .input-form{
+    margin-bottom: 1rem;
+    margin-top: 0.3rem;
+    width: 100%;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ef6500;
+  }
+
+  .label-form{
+    font-size: 0.8rem;
+    color: #ef6500;
+    font-weight: bold;
+  }
+
+input[type="text"]:focus, input[type="password"]:focus{
+    outline: none;
+  }
+
+  .notification {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    color: whitesmoke;
+    background-color: green;
+    padding: 10px;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.close-btn {
+    float: right;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+.btn-confirmar{
+    padding: 0.8rem;
+    border-radius: 10px;
+    background-color: #ef6500;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+.password-container {
+    position: relative;
+    padding-bottom: 1rem;
+  }
+
+  .password-container > input{
+    margin: 0;
+  }
+  
+
+  
+  .password-container #toggle-password {
+    position: absolute;
+    right: 0;
+    transform: translateY(50%);
+    background-color: #19875400;
+    cursor: pointer;
+    color: #ef6500;
+  }
+}
+
