@@ -105,6 +105,7 @@ require_once 'vista/modulos/navTienda.php';
                 <p id="totalestimado-carrito">$2350</p>
             </section>
             <button class="btn-carrito-principal" id="btn-principal-carrito">Iniciar compra</button>
+            <a class="seguir-comprando-carrito" id="seguir-comprando-carrito"> o <br> Seguir comprando.</a>
         </section>
 </section>
 
@@ -185,6 +186,9 @@ require_once 'vista/modulos/navTienda.php';
     <!-- If we need scrollbar -->
     <div class="swiper-scrollbar"></div>
 </div>
+
+
+
 
 <section class="contenedor-section-destacados">
     <h2 class="titulo-inicio">Destacados</h2>

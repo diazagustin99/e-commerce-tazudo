@@ -43,7 +43,7 @@ btnCerrar.addEventListener('click', ()=>{
 
 
 ListProdDestacado.forEach(ListElement=>{
-  ListElement.addEventListener('click', ()=>{
+  ListElement.addEventListener('click', (event)=>{
     var idprod = ListElement.getAttribute('idprod');
     DetalleProd(idprod);
   })

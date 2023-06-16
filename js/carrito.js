@@ -25,11 +25,15 @@ const recargoCarrito = document.getElementById('recargo-carrito');
 const ctnRecargo = document.getElementById('ctn-recargo');
 const pagoTarjetaRadio = document.getElementById('tarjetas');
 const ctnMedioPagoInput = document.getElementById('ctn-input-mediopago');
+const btnSeguirComprando = document.getElementById('seguir-comprando-carrito');
 var tsc = 0;
 
 
 
-btnPrincipalCarrito.addEventListener('click', () => {
+
+btnPrincipalCarrito.addEventListener('click', (event) => {
+    var btn = event.target;
+    var loader = CrearLoader();
     if (btnPrincipalCarrito.textContent == 'Iniciar compra') {
         ctnProdCarrito.style.display = 'none';
         ctnformpedido.style.display = 'flex';
@@ -40,7 +44,12 @@ btnPrincipalCarrito.addEventListener('click', () => {
             ModalCarrito.classList.toggle('show');
         } else {
             if (btnPrincipalCarrito.textContent == 'Realizar compra') {
-                realizarPedido();
+                var medioPago = $('input[name=medioPago]:checked').val();
+                var metentrega = $('input[name=metentrega]:checked').val();
+                if (medioPago!= null && metentrega!=null) {                    
+                    btn.appendChild(loader);
+                    realizarPedido();
+                }
             }
         }
     }
@@ -79,12 +88,32 @@ btnVolverCarrito.addEventListener('click', () => {
         totalestimadocarrito.innerHTML = '$' + tsc;
     } else {
         ModalCarrito.classList.toggle('show');
+        console.log('entra cuando no hay nada')
     }
 });
 
-btnAgregar.addEventListener('click', () => {
+btnSeguirComprando.addEventListener('click', () => {
+    if (ctnformpedido.style.display == 'flex') {
+        ctnProdCarrito.style.display = 'flex';
+        ctnformpedido.style.display = 'none';
+        titulocarrito.textContent = 'Tu carrito';
+        btnPrincipalCarrito.textContent = 'Iniciar compra';
+        formPedido.reset();
+        InputDireccion();
+        calcularRecargo(0);
+        totalestimadocarrito.innerHTML = '$' + tsc;
+        ModalCarrito.classList.toggle('show');
+    } else {
+        ModalCarrito.classList.toggle('show');
+    }
+});
+
+btnAgregar.addEventListener('click', (event) => {
+    var btn = event.target;
+    var loader = CrearLoader();
+    btn.appendChild(loader);
     let idprod = btnAgregar.id;
-    console.log(btnAgregar.id);
+    $("button").prop("disabled", true);
     $.ajax({
         url: 'controlador/agregar_carrito.php',
         type: 'POST',
@@ -98,29 +127,35 @@ btnAgregar.addEventListener('click', () => {
             ModalDetalleProd.classList.toggle('show');
             if (response.estado.codigo == 200) {
                 contadorcarritomenu.innerHTML = response.countCarrito;
+                AbrirCarrito();
                 h3not.innerHTML = 'Producto agregado';
                 notification.style.backgroundColor = 'green';
                 bodyNot.innerHTML = 'El producto fue agregado a su carrito';
                 CTNnotification.classList.toggle('show-notificacion');
-                AbrirCarrito();
                 setTimeout(function () {
                     closeNotification();
-                }, 2000);
+                }, 5000);
             } else {
+                AbrirCarrito();
                 h3not.innerHTML = 'Producto NO agregado';
                 notification.style.backgroundColor = 'red';
                 bodyNot.innerHTML = response.estado.mensaje;
                 CTNnotification.classList.toggle('show-notificacion');
-                AbrirCarrito();
                 setTimeout(function () {
                     closeNotification();
-                }, 2000);
+                }, 5000);
             }
+            $("button").prop("disabled", false);
+            loader.remove();
         },
         error: function (response) {
             console.log(response);
+            loader.remove();
+            $("button").prop("disabled", false);
         }
     });
+
+
 })
 
 function InputDireccion() {
@@ -167,8 +202,10 @@ function AbrirCarrito() {
                 ctnCarritoVacio.style.display = 'flex';
                 btnPrincipalCarrito.textContent = 'Volver a la tienda';
                 ModalCarrito.classList.toggle('show');
+                btnSeguirComprando.style.display='none';
             } else {
                 ctnCarritoVacio.style.display = 'none';
+                btnSeguirComprando.style.display='block';
                 response.carrito.forEach(element => {
                     const prodcarrito = document.createElement('section');
                     prodcarrito.classList.add('prod-carrito');
@@ -203,6 +240,7 @@ function AbrirCarrito() {
 
                     const cantidadcarritoprod = document.createElement('input');
                     cantidadcarritoprod.type = 'number';
+                    cantidadcarritoprod.readOnly = true;
                     cantidadcarritoprod.classList.add('cantidad-carrito-prod');
                     cantidadcarritoprod.value = element.cantidad;
                     cantidadcarritoprod.dataset.idprod = element.producto.id_producto;
@@ -250,6 +288,7 @@ function closeNotification() {
 }
 
 function realizarPedido() {
+    $("button").prop("disabled", true);
     var medioPago = $('input[name=medioPago]:checked').val();
     var metentrega = $('input[name=metentrega]:checked').val();
     var formData = {
@@ -273,10 +312,12 @@ function realizarPedido() {
                 //Redirecciona automáticamente a a wsp
                 window.location.href = urlWP;
             }
+            $("button").prop("disabled", false);
         },
         error: function (xhr, status, error) {
             // Manejar errores de la petición
             console.log(error);
+            $("button").prop("disabled", false);
         }
     });
 }
@@ -303,6 +344,9 @@ function btnsCantidad() {
 }
 
 function ActualizarCantidadCarrito(id, cantidad, ctnProd) {
+    var loader = CrearLoader()
+    ctnProd.appendChild(loader);
+    $(ctnProd).find('button.btn-cantidad-carrito').prop("disabled", true);
     let ctnPrecioProd = ctnProd.querySelector('.sub-total-prod');
     let SubTotalProdP = ctnPrecioProd.querySelector('p');
     $.ajax({
@@ -319,23 +363,32 @@ function ActualizarCantidadCarrito(id, cantidad, ctnProd) {
                 ctnCarritoVacio.style.display = 'flex';
                 btnPrincipalCarrito.textContent = 'Volver a la tienda';
                 contadorcarritomenu.textContent = 0;
+                btnSeguirComprando.style.display='none';
+                loader.remove();
+                $(ctnProd).find('button.btn-cantidad-carrito').prop("disabled", false);
             } else {
                 if (cantidad > 0) {
                     SubTotalProdP.textContent = '$' + CalcularSubTotalProd(response.carrito, id);
                     calcularTotalCarrito(response.carrito);
                     totalestimadocarrito.textContent = '$' + tsc;
                     console.log(response.carrito);
+                    loader.remove();
+                    $(ctnProd).find('button.btn-cantidad-carrito').prop("disabled", false);
                 } else {
                     ctnProd.remove();
                     calcularTotalCarrito(response.carrito);
                     totalestimadocarrito.textContent = '$' + tsc;
                     console.log(response.carrito);
+                    loader.remove();
+                    $(ctnProd).find('button.btn-cantidad-carrito').prop("disabled", false);
                 }
                 contadorcarritomenu.textContent = response.estado.countCarrito;
             }
         },
         error: function (response) {
             console.log(response);
+            loader.remove();
+            ctnProd.find('button.btn-cantidad-carrito').prop("disabled", false);
         }
     });
 
@@ -367,6 +420,26 @@ function CalcularSubTotalProd(carrito, id) {
         }
     })
     return st;
+}
+
+function CrearLoader() {
+    var ctnsvg = document.createElement('section');
+    ctnsvg.classList.add('ctn-loader');
+    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 50 50");
+
+    var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("cx", "25");
+    circle.setAttribute("cy", "25");
+    circle.setAttribute("r", "20");
+    circle.setAttribute("fill", "none");
+    circle.setAttribute("stroke-width", "4");
+    svg.classList.add('loader-svg');
+    circle.classList.add('loader-circle');
+
+    svg.appendChild(circle);
+    ctnsvg.appendChild(svg);
+    return ctnsvg;
 }
 
 
