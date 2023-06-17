@@ -30,7 +30,7 @@
             </a>
         </section>
         <section class="logo-footer">
-            <img src="img/botones/tazudologo-final.png" alt="">
+            <img src="<?php echo $rutalogo;?>/tazudologo-final.png" alt="">
         </section>
     </section>
     <p>Desarrollado por el tazudo.</p>

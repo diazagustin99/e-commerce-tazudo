@@ -26,20 +26,20 @@ desconectar($conexion);
         <ul class="enlaces">
             <li><a href="">Inicio</a></li>
             <li >
-                <a href="#" id="padre-submenu1" class="padre-submenu">Productos</a>
+                <a id="padre-submenu1" class="padre-submenu">Productos</a>
                 <ul id="submenu1" class="sub-menu">
                     <?php
                             while ($rowCat = mysqli_fetch_array($resultado)) {
-                                echo '<li><a href="" idcat="',$rowCat['id_categoria'],'">',$rowCat['nombre_categoria'], '</a></li>';
+                                echo '<li><a idcat="',$rowCat['id_categoria'],'" class="li-filtro-cat">',$rowCat['nombre_categoria'], '</a></li>';
                             }
                     ?>
-                    <li><a href="">TODOS LOS PRODUCTOS</a></li>
-                    <li><a href="">OFERTAS</a></li>
+                    <li><a  class="li-filtro-cat" idcat="">TODOS LOS PRODUCTOS</a></li>
+                    <li><a  class="li-filtro-cat">OFERTAS</a></li>
 
                 </ul>
             </li>
-            <li><a href="">¿Quien es el tazudo?</a></li>
-            <li><a href="">Contacto</a></li>
+            <li><a href="#">¿Quien es el tazudo?</a></li>
+            <li><a href="#">Contacto</a></li>
         </ul>
     </nav>
 </section>

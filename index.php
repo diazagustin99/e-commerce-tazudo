@@ -1,6 +1,8 @@
 <?php
 $ruta = 'css';
 $rutajs = 'js';
+$rutalogo = 'img/botones';
+$tituloPagina= 'Tazudo | Queda bien, bien de verdad';
 require 'controlador/conexion.php';
 require 'modelo/modeloProducto.php';
 require 'modelo/modeloCategoria.php';
@@ -135,14 +137,15 @@ require_once 'vista/modulos/navTienda.php';
         </section>
         <section class="modal-detalleProd-np">
             <h3 id="nombre-detalleProd">TAZON XXL BOB SPONJA</h3>
-            <section class="ctn-precio-no">
+            <section class="ctn-precio-no" id="ctn-precio-no">
                 <p class="cartel-oferta-detalle" id="cartel-oferta-detalle">OFERTA</p>
+                <p class="cartel-sinstock-detalle" id="cartel-sinstock-detalle">SIN STOCK</p>
                 <p id="precioP-detalleProd">$2600</p>
                 <p class="precio-sindescuento" id="precioSD-detalleProd"> $2800</p>
             </section>
         </section>
         <p  class="descripcion-prod-modal" id="descripcion-detalleProd">Tazas Duo BOB & PATRICIO, tazas de ceramica premium apta para microondas y lavavajillas con capacidad de 350cc. Aprovecha el precio PROMOCIONAL de ingreso!</p>
-        <section class="ctn-cantidad-agregar">
+        <section class="ctn-cantidad-agregar" id="ctn-cantidad-agregar">
             <section class="ctn-cantidad">
                 <p>cantidad</p>
                 <section class="ctn-input-cant">
@@ -289,18 +292,25 @@ require_once 'vista/modulos/navTienda.php';
         if (mysqli_num_rows($resultado) > 0) {
             while ($fila = mysqli_fetch_array($resultado)) {
                 echo '<article class="card-prod" id="',$fila[0],'">';
-                if ($fila[3] != 0) {
+                if ($fila[3] != 0 && $fila[4]=='Activo') {
                     echo '<p class="cartel-oferta"> OFERTA </p>';
+                }
+                if ($fila[4]=='Sin Stock') {
+                    echo '<p class="cartel-sinstock"> SIN STOCK </p>';
                 }
                 echo '<img src="', 'img/productos/',$fila[5], '" alt="foto del producto ', $fila[1], '">';
                 echo '<section class="ctn-nomb-precio">';
                 echo '<h4>', $fila[1], '</h4>';
                 echo '<section class="ctn-precio">';
-                if ($fila[3] != 0) {
-                    echo '<p class="precio">$', $fila[6], '</p>';
-                    echo '<p class="precio-sindescuento">$', $fila[2], '</p>';
-                } else {
-                    echo '<p class="precio">$', $fila[2], '</p>';
+                if ($fila[4]=='Sin Stock') {
+                    echo '<p class="precio-sindescuento">', 'SIN STOCK :(', '</p>';
+                }else {
+                    if ($fila[3] != 0) {
+                        echo '<p class="precio">$', $fila[6], '</p>';
+                        echo '<p class="precio-sindescuento">$', $fila[2], '</p>';
+                    } else {
+                        echo '<p class="precio">$', $fila[2], '</p>';
+                    }
                 }
                 echo '</section>';
                 echo '</section>';

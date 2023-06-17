@@ -333,12 +333,23 @@ html {
         top: 0.3rem;
         right: 0.3rem;
         font-size: 0.7rem;
-        background: rgb(255, 184, 0);
-        background: linear-gradient(71deg, rgba(255, 184, 0, 1) 0%, rgba(255, 0, 0, 1) 11%, rgba(239, 101, 0, 1) 48%, rgba(255, 0, 0, 1) 89%, rgba(255, 184, 0, 1) 100%);
+        background: rgba(8, 253, 0, 0.505);
+        border: solid rgb(7, 207, 0) 1px;
         padding: 0.3rem;
-        border-radius: 10px;
+        border-radius: 5px;
         color: white;
+    }
 
+    .cartel-sinstock{
+            position: absolute;
+            top: 0.3rem;
+            right: 0.3rem;
+            font-size: 0.7rem;
+            background: rgba(253, 173, 0, 0.505);
+            border: solid rgb(255, 251, 0) 1px;
+            padding: 0.3rem;
+            border-radius: 5px;
+            color: white;
     }
 
     .card-prod img {
@@ -497,16 +508,29 @@ html {
     }
 
     .cartel-oferta-detalle{
-        background: rgb(255, 184, 0);
         font-size: 0.7rem !important;
-        background: linear-gradient(71deg, rgba(255, 184, 0, 1) 0%, rgba(255, 0, 0, 1) 11%, rgba(239, 101, 0, 1) 48%, rgba(255, 0, 0, 1) 89%, rgba(255, 184, 0, 1) 100%);
+        background: rgba(8, 253, 0, 0.505);
+        border: solid rgb(7, 207, 0) 1px;
+        border-radius: 5px;
         padding: 4px;
-        border-radius: 10px;
-        color: white !important;
+        color: green !important;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-right: 0 !important;
+        margin-right: 0.8rem !important;
+    }
+
+    .cartel-sinstock-detalle{
+        font-size: 0.7rem !important;
+        background: rgba(253, 173, 0, 0.505);
+        border: solid rgb(253, 173, 0) 1px;
+        border-radius: 5px;
+        padding: 4px;
+        color: rgb(173, 118, 0) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0.8rem !important;
     }
 
 
@@ -1045,7 +1069,76 @@ html {
         }
       }
       
+      .header-pagoAprobado{
+        width: 100%;
+        min-height: 30vh;
+        background-color: green;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0 0 10% 10%;
+        text-align: center;
+      }
 
+      .header-pagoAprobado > h1{
+        font-size: 3rem;
+      }
+
+      .header-pagoAprobado > h2{
+        font-size: 1rem;
+        font-weight: 300;
+        margin-top: 2rem;
+      }
+
+      .ctn-centro-pagoAprobado{
+        width: 100%;
+        min-height: 75vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        text-align: center;
+        padding: 0.8rem;
+      }
+
+      .ctn-centro-pagoAprobado > p{
+        font-size: 2rem;
+        font-weight: 700;
+        color: #ef6500;
+        margin-top: 1.6rem;
+      }
+
+      .ctn-centro-pagoAprobado > ol{
+        width: 80%;
+        margin-top: 1rem;
+      }
+
+      .ctn-centro-pagoAprobado > ol > li::marker{
+        color: #ef6500;
+        font-weight: 600;
+      }
+
+      .ctn-centro-pagoAprobado > ol > li{
+        margin-bottom: 0.8rem;
+      }
+
+
+      .ctn-btn-completar{
+        position: sticky;
+        bottom: 0;
+        padding: 0.8rem;
+      }
+
+      .ctn-btn-completar > button{
+        width: 100%;
+        padding: 1rem;
+        border-radius: 10px;
+        background-color: green;
+        color: whitesmoke;
+        font-size: 1.2rem;
+      }
 }
 
 

@@ -1,5 +1,29 @@
 const listCat = document.querySelectorAll('.categoria-top');
-
+const ListMenuCat = document.querySelectorAll('.li-filtro-cat');
+ListMenuCat.forEach(ListElement => {
+  ListElement.addEventListener('click', ()=>{
+      idcat = ListElement.getAttribute('idcat');
+      $.ajax({
+          url: 'controlador/filtrar_productos.php',
+          type: 'POST',
+          data: {
+            idcat: idcat
+          },
+          success: function (response) {
+              console.log(response);
+              btnAbrirMenu.checked= false;
+              ctnEnlaces.classList.toggle('show-menu');
+              var ctnProductos = document.getElementById('ctn-productos');
+              const prodActualizado = crearTarjetasProductos(response.datos);
+              reemplazarElemento(ctnProductos, prodActualizado);
+              document.getElementById('main-prod').scrollIntoView({ behavior: 'smooth' });
+          },
+          error: function (response) {
+            console.log(response);
+          }
+        });
+  })
+});
 
 
 listCat.forEach(ListElement => {
@@ -57,27 +81,37 @@ function crearTarjetasProductos(productos) {
 
     const section2 = document.createElement('section');
     section2.classList.add('ctn-precio');
-
-    if (producto.estado_oferta == 1) {
+    if (producto.estado == 'Activo') {      
+      if (producto.estado_oferta == 1) {
+        const cartelOferta = document.createElement('p');
+        cartelOferta.classList.add('cartel-oferta');
+        cartelOferta.textContent = 'OFERTA';
+        article.appendChild(cartelOferta);
+        
+        const p = document.createElement('p');
+        p.classList.add('precio');
+        p.textContent = `$${producto.precio_oferta}`;
+  
+        const p2 = document.createElement('p');
+        p2.classList.add('precio-sindescuento');
+        p2.textContent = `$${producto.precio_menor}`;
+        section2.appendChild(p);
+        section2.appendChild(p2);
+      }else{
+        const p = document.createElement('p');
+        p.classList.add('precio');
+        p.textContent = `$${producto.precio_menor}`;
+        section2.appendChild(p);
+      }
+    }else{
       const cartelOferta = document.createElement('p');
-      cartelOferta.classList.add('cartel-oferta');
-      cartelOferta.textContent = 'OFERTA';
+      cartelOferta.classList.add('cartel-sinstock');
+      cartelOferta.textContent = 'SIN STOCK';
       article.appendChild(cartelOferta);
-      
-      const p = document.createElement('p');
-      p.classList.add('precio');
-      p.textContent = `$${producto.precio_oferta}`;
-
       const p2 = document.createElement('p');
       p2.classList.add('precio-sindescuento');
-      p2.textContent = `$${producto.precio_menor}`;
-      section2.appendChild(p);
+      p2.textContent = 'SIN STOCK';
       section2.appendChild(p2);
-    }else{
-      const p = document.createElement('p');
-      p.classList.add('precio');
-      p.textContent = `$${producto.precio_menor}`;
-      section2.appendChild(p);
     }
 
     // Construir la estructura de la tarjeta
@@ -95,43 +129,54 @@ function crearTarjetasProductos(productos) {
 }
 
 
-function DetalleProd(idprod) {
-      $.ajax({
-        url: 'controlador/obtenerProducto.php',
-        type: 'POST',
-        data: {
-          id: idprod
-        },
-        success: function (response) {
-          InputCantidadProd.innerText= '1';
-          CtnImg.innerHTML = '';
-            for (let index = 0; index < response.datos[0]['imagenes'].length; index++) {
-                if (response.datos[0]['imagenes'][index] != '') {
-                    var imagen = document.createElement("img");
-                    imagen.src = 'img/productos/'+response.datos[0]['imagenes'][index];
-                    imagen.classList.add('swiper-slide');
-                    CtnImg.appendChild(imagen);
-                }   
-            }
-            swiperProd.update();
-            swiperProd.slideTo(0);
-            nombreProd.innerHTML= response.datos[0]['nombre'];
-            if (response.datos[0]['estado_oferta'] == 1) {
-              CartelDescuento.style.display= 'flex';
-              PrecioProd.innerHTML = '$'+response.datos[0]['precio_oferta']; 
-              PrecioProdSD.innerHTML = '$'+response.datos[0]['precio_menor']; 
-              PrecioProdSD.style.display='block';
-            }else{
-              CartelDescuento.style.display= 'none';
-              PrecioProd.innerHTML = '$'+response.datos[0]['precio_menor']; 
-              PrecioProdSD.style.display='none';
-            }
-            DesProd.innerHTML =response.datos[0]['descripcion'];
-            btnAgregarModal.id = response.datos[0]['id_producto'];
-            ModalDetalle.classList.toggle('show');
-        },
-        error: function (response) {
-          console.log(response);
+/*function DetalleProd(idprod) {
+  $.ajax({
+    url: 'controlador/obtenerProducto.php',
+    type: 'POST',
+    data: {
+      id: idprod
+    },
+    success: function (response) {
+      console.log(response.datos[0]);
+      InputCantidadProd.innerText= '1';
+      CtnImg.innerHTML = '';
+        for (let index = 0; index < response.datos[0]['imagenes'].length; index++) {
+            if (response.datos[0]['imagenes'][index] != '') {
+                var imagen = document.createElement("img");
+                imagen.src = 'img/productos/'+response.datos[0]['imagenes'][index];
+                imagen.classList.add('swiper-slide');
+                CtnImg.appendChild(imagen);
+            }   
         }
-      });
-}
+        swiperProd.update();
+        swiperProd.slideTo(0);
+        nombreProd.innerHTML= response.datos[0]['nombre'];
+        if (response.datos[0]['estado'] === 'Sin Stock') {
+          CartelSinStock.style.display='flex';
+          CartelDescuento.style.display= 'none';
+          ctnPrecios.style.display='none';
+          ctnAccionPrincipalDetalle.style.display='none';
+        }else{
+          CartelSinStock.style.display='none';
+          ctnAccionPrincipalDetalle.style.display='flex';
+          ctnPrecios.style.display='flex';
+          if (response.datos[0]['estado_oferta'] == 1) {
+            CartelDescuento.style.display= 'flex';
+            PrecioProd.innerHTML = '$'+response.datos[0]['precio_oferta']; 
+            PrecioProdSD.innerHTML = '$'+response.datos[0]['precio_menor']; 
+            PrecioProdSD.style.display='block';
+          }else{
+            CartelDescuento.style.display= 'none';
+            PrecioProd.innerHTML = '$'+response.datos[0]['precio_menor']; 
+            PrecioProdSD.style.display='none';
+          }
+          btnAgregarModal.id = response.datos[0]['id_producto'];
+        }
+        DesProd.innerHTML =response.datos[0]['descripcion'];
+        ModalDetalle.classList.toggle('show');
+    },
+    error: function (response) {
+      console.log(response);
+    }
+  });
+}*/
