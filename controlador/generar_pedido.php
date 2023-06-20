@@ -91,6 +91,8 @@ if (!empty($_POST['medioPago']) && !empty($_POST['metentrega']) &&!empty($_SESSI
         $preference->external_reference = $pedido->id_pedido;
         $preference->save();
         $pedido->linkPago = $preference->init_point;
+    }else{
+        unset($_SESSION['carrito']);
     }
     $respuesta->pedido=$pedido;
     $_SESSION['pedido']=$pedido;
