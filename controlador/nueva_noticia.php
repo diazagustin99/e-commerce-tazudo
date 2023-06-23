@@ -20,12 +20,24 @@ if (!empty($_POST['descripcion']) && !empty($_POST['orden'])) {
         $checkActivo = false;
     }
     $nombreIMG1='';
-
     if (!empty($_FILES['foto1']['size'])) {
         $nombreIMG1=GuardarImagen('foto1',$rutaImg, 'noti'.$fecha);
     }
 
-    $conexion = conectar();
+      $conexion = conectar();
+      $resultadoCout = mysqli_query($conexion, 'SELECT COUNT(*) FROM noticias WHERE estado_noticia = true');
+      $rowConteo = mysqli_fetch_array($resultadoCout);
+      $conteo = $rowConteo[0]+1;
+      if ($orden > $conteo) {
+        $orden=$conteo;
+      }
+      $resultadoOrden =  mysqli_query($conexion, 'SELECT * FROM noticias WHERE orden_noticia = '. $orden);
+      if (mysqli_num_rows($resultadoOrden) > 0) {
+        $row=mysqli_fetch_array($resultadoOrden);
+        $resultado = mysqli_query($conexion, 'UPDATE noticias SET orden_noticia = \''.$conteo.'\' WHERE id_noticia ='. $row['id_noticia']);
+      }
+
+
     $resultado = mysqli_query($conexion, 'INSERT INTO noticias(nombre_noticia, estado_noticia, orden_noticia, img_noticia) VALUES (\''.$descripcion.'\', \''.$checkActivo.'\', \''. $orden .'\', \''. $nombreIMG1 .'\')');
     desconectar($conexion);
     header("refresh:0;url=../admin/pages/noticias.php");

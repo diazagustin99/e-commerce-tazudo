@@ -19,11 +19,10 @@ require_once("../../controlador/conexion.php");
 
             <section class="filtrar">
                 <form action="" method="get">
-                    <label for="cat">Filtro de categorias:</label>
-                    <select name="categoria" id="cat">
-                        <option value="cat1">Categoria 1</option>
-                        <option value="cat2">Categoria 2</option>
-                        <option value="cat3">Categoria 3</option>
+                    <label for="estadoNot">Filtro de estado:</label>
+                    <select name="estadoNot" id="estadoNot">
+                        <option value="ON">NOTICIAS ACTIVAS</option>
+                        <option value="OFF">NOTICIAS OFF</option>
                     </select>
                     <button type="submit" class="btn-filtrar"> Filtrar</button>
                 </form>
@@ -102,7 +101,7 @@ require_once("../../controlador/conexion.php");
 
 </section>
 
-<section class="contenedormodal" id="modal-eliminarProducto">
+<section class="contenedormodal" id="modal-eliminarNoticia">
     <section class="modal">
         <h3>¿Desea eliminar esta noticia?</h3>
         <section class="card-prod-elim">
@@ -132,7 +131,7 @@ require_once("../../controlador/conexion.php");
             <form id="formModal" action="../../controlador/nueva_noticia.php" method="post" enctype="multipart/form-data">
                 <section class="form-crear">
                     <section>
-                        <div class="input-container">
+                        <div class="input-container-noticia">
                             <input id="foto1-reg" type="hidden" name="foto1-reg">
                             <input type="file" id="input-file1" name="foto1">
                             <img id="preview-image1">
@@ -182,5 +181,6 @@ require_once("../../controlador/conexion.php");
 
 <?php
 echo '<script src="../js/modal-CMnoticias.js"></script>';
+echo '<script src="../js/modal-eliminarNoticia.js"></script>';
 require_once("../../vista/modulos/footer-admin.php");
 ?>

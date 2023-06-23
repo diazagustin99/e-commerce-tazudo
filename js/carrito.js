@@ -443,3 +443,354 @@ function CrearLoader() {
 }
 
 
+//CUANDO REDUCIR EL TIEMPO DE CARGA DEBERIA CREAR EL MODAL CARRITO RECIEN CUANDO DE CLICK EN EL BOTON DEL CARRITO
+function crearModalCarrito() {
+    var modalCarrito = $('<section>', {
+      class: 'modal-carrito',
+      id: 'modal-carrito'
+    });
+  
+    var ctnNavegacion = $('<section>', {
+      class: 'ctn-navegacion'
+    });
+  
+    var btnVolverCarrito = $('<button>', {
+      class: 'btn-volver-carrito',
+      id: 'btn-volver-carrito'
+    });
+  
+    var svg = $('<svg>', {
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '16',
+      height: '16',
+      fill: 'currentColor',
+      class: 'bi bi-arrow-left',
+      viewBox: '0 0 16 16'
+    });
+  
+    var path = $('<path>', {
+      'fill-rule': 'evenodd',
+      d: 'M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z'
+    });
+  
+    var ctnNotification = $('<div>', {
+      class: 'ctn-notification'
+    });
+  
+    var notification = $('<div>', {
+      class: 'notification',
+      id: 'body-not'
+    });
+  
+    var h3Not = $('<h3>', {
+      id: 'h3-not',
+      text: 'Notificación'
+    });
+  
+    var textNot = $('<p>', {
+      id: 'text-not',
+      text: 'Esta es una notificación flotante.'
+    });
+  
+    var tituloCarrito = $('<h2>', {
+      id: 'titulo-carrito',
+      text: 'Tu carrito'
+    });
+  
+    var ctnCarritoVacio = $('<section>', {
+      class: 'ctn-carrito-vacio'
+    });
+  
+    var imgCarritoVacio = $('<img>', {
+      src: 'img/botones/tazudologo-final-vector.svg',
+      alt: '',
+      class: 'img-carrito-vacio'
+    });
+  
+    var textCarritoVacio = $('<p>', {
+      class: 'text-carrito-vacio',
+      text: 'Adivina que... exacto, no agregaste ningun producto a tu carrito tazudo'
+    });
+  
+    var ctnFormPedido = $('<section>', {
+      class: 'ctn-form-pedido',
+      id: 'ctn-form-pedido'
+    });
+  
+    var formPedido = $('<form>', {
+      class: 'form-pedido',
+      id: 'form-pedido'
+    });
+  
+    var ctnInputMedioPago = $('<section>', {
+      class: 'ctn-input',
+      id: 'ctn-input-mediopago'
+    });
+  
+    var lblInputPedido1 = $('<label>', {
+      for: 'tarjetas',
+      class: 'lbl-input-pedido',
+      text: 'Formas de pago'
+    });
+  
+    var inputRadioList1 = $('<label>', {
+      for: 'tarjetas',
+      class: 'input-radiolist'
+    }).append(
+      $('<input>', {
+        type: 'radio',
+        name: 'medioPago',
+        id: 'tarjetas',
+        class: 'input-radio',
+        value: 'tarjetas',
+        required: true
+      }),
+      $('<section>', {
+        class: 'ctn-nombreradio-descp'
+      }).append(
+        $('<p>', {
+          class: 'titulo-radio',
+          text: 'Tarjetas Credito/Debito'
+        }),
+        $('<p>', {
+          class: 'descp-radio',
+          text: 'Pagá con cualquier tarjeta!'
+        })
+      )
+    );
+  
+    var inputRadioList2 = $('<label>', {
+      for: 'efectivo',
+      class: 'input-radiolist'
+    }).append(
+      $('<input>', {
+        type: 'radio',
+        name: 'medioPago',
+        id: 'efectivo',
+        class: 'input-radio',
+        value: 'efectivo',
+        required: true
+      }),
+      $('<section>', {
+        class: 'ctn-nombreradio-descp'
+      }).append(
+        $('<p>', {
+          class: 'titulo-radio',
+          text: 'Efectivo'
+        }),
+        $('<p>', {
+          class: 'descp-radio',
+          text: 'Lo pagas en puerta :D'
+        })
+      )
+    );
+  
+    var inputRadioList3 = $('<label>', {
+      for: 'transferencia',
+      class: 'input-radiolist'
+    }).append(
+      $('<input>', {
+        type: 'radio',
+        name: 'medioPago',
+        id: 'transferencia',
+        class: 'input-radio',
+        value: 'transferencia',
+        required: true
+      }),
+      $('<section>', {
+        class: 'ctn-nombreradio-descp'
+      }).append(
+        $('<p>', {
+          class: 'titulo-radio',
+          text: 'Transferencia'
+        }),
+        $('<p>', {
+          class: 'descp-radio',
+          text: 'Luego te pasamos los datos :P'
+        })
+      )
+    );
+  
+    var ctnInputMetEntrega = $('<section>', {
+      class: 'ctn-input',
+      id: 'ctn-metEntrega'
+    });
+  
+    var lblInputPedido2 = $('<label>', {
+      for: 'envioDom',
+      class: 'lbl-input-pedido',
+      text: 'Metodos de entrega'
+    });
+  
+    var inputRadioList4 = $('<label>', {
+      for: 'envioDom',
+      class: 'input-radiolist'
+    }).append(
+      $('<input>', {
+        type: 'radio',
+        name: 'metentrega',
+        id: 'envioDom',
+        class: 'input-radio',
+        value: 'envio-domicilio',
+        required: true
+      }),
+      $('<section>', {
+        class: 'ctn-nombreradio-descp'
+      }).append(
+        $('<p>', {
+          class: 'titulo-radio',
+          text: 'Envio a domicilio'
+        }),
+        $('<p>', {
+          class: 'descp-radio',
+          text: 'Hacemos envios todos los dias! (Entre $250 a $500)'
+        })
+      )
+    );
+  
+    var inputRadioList5 = $('<label>', {
+      for: 'retirar',
+      class: 'input-radiolist'
+    }).append(
+      $('<input>', {
+        type: 'radio',
+        name: 'metentrega',
+        id: 'retirar',
+        class: 'input-radio',
+        value: 'retiro',
+        required: true
+      }),
+      $('<section>', {
+        class: 'ctn-nombreradio-descp'
+      }).append(
+        $('<p>', {
+          class: 'titulo-radio',
+          text: 'Retiro de punto de entrega'
+        }),
+        $('<p>', {
+          class: 'descp-radio',
+          text: 'Nuestro unico punto de retiro es en heras 2200'
+        })
+      )
+    );
+  
+    var ctnInputDireccion = $('<section>', {
+      class: 'ctn-input',
+      id: 'ctn-input-direccion'
+    });
+  
+    var lblInputPedido3 = $('<label>', {
+      for: 'dire',
+      class: 'lbl-input-pedido',
+      text: 'Direccion de entrega'
+    });
+  
+    var inputDireccion = $('<input>', {
+      type: 'text',
+      name: 'direccionEntrega',
+      id: 'dire',
+      maxlength: '70',
+      class: 'input-text-pedido',
+      placeholder: 'Escribe aqui tazud@...'
+    });
+  
+    var walletContainer = $('<div>', {
+      id: 'wallet_container'
+    });
+  
+    var ctnProdCarrito = $('<section>', {
+      class: 'ctn-prod-carrito',
+      id: 'ctn-prod-carrito'
+    });
+  
+    var ctnTotalBtn = $('<section>', {
+      class: 'ctn-total-btn'
+    });
+  
+    var ctnRecargo = $('<section>', {
+      class: 'ctn-recargo',
+      id: 'ctn-recargo'
+    }).append(
+      $('<p>', {
+        text: 'Recargo'
+      }),
+      $('<p>', {
+        id: 'recargo-carrito',
+        text: '$100'
+      })
+    );
+  
+    var totalCarrito = $('<section>', {
+      class: 'total-carrito'
+    }).append(
+      $('<p>', {
+        text: 'Total estimado'
+      }),
+      $('<p>', {
+        id: 'totalestimado-carrito',
+        text: '$2350'
+      })
+    );
+  
+    var btnPrincipalCarrito = $('<button>', {
+      class: 'btn-carrito-principal',
+      id: 'btn-principal-carrito',
+      text: 'Iniciar compra'
+    });
+  
+    var seguirComprandoCarrito = $('<a>', {
+      class: 'seguir-comprando-carrito',
+      id: 'seguir-comprando-carrito',
+      html: 'o <br> Seguir comprando.'
+    });
+  
+    modalCarrito.append(
+      ctnNavegacion.append(
+        btnVolverCarrito.append(
+          svg.append(path)
+        )
+      ),
+      ctnNotification.append(
+        notification.append(
+          h3Not,
+          textNot
+        )
+      ),
+      tituloCarrito,
+      ctnCarritoVacio.append(
+        imgCarritoVacio,
+        textCarritoVacio
+      ),
+      ctnFormPedido.append(
+        formPedido.append(
+          ctnInputMedioPago.append(
+            lblInputPedido1,
+            inputRadioList1,
+            inputRadioList2,
+            inputRadioList3
+          ),
+          ctnInputMetEntrega.append(
+            lblInputPedido2,
+            inputRadioList4,
+            inputRadioList5
+          ),
+          ctnInputDireccion.append(
+            lblInputPedido3,
+            inputDireccion
+          ),
+          walletContainer
+        )
+      ),
+      ctnProdCarrito,
+      ctnTotalBtn.append(
+        ctnRecargo,
+        totalCarrito,
+        btnPrincipalCarrito,
+        seguirComprandoCarrito
+      )
+    );
+  
+    $('body').append(modalCarrito);
+  }
+
+

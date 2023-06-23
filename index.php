@@ -111,7 +111,6 @@ require_once 'vista/modulos/navTienda.php';
         </section>
 </section>
 
-
 <section class="modal-detalleProd" id="modal-detalleProd">
     <section class="ctn-prod-detalle">
         <section class="swiper-prod">
@@ -159,16 +158,21 @@ require_once 'vista/modulos/navTienda.php';
     </section>
 </section>
 
-
-
 <div class="swiper">
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
         <!-- Slides -->
-        <img class="swiper-slide" src="img/noticias/post-especial.jpg" alt="">
-        <div class="swiper-slide">Slide 2</div>
-        <div class="swiper-slide">Slide 3</div>
-        ...
+        <?php
+        $conexion = conectar();
+        $resultado = mysqli_query($conexion, 'SELECT *  FROM noticias WHERE estado_noticia = 1  ORDER BY orden_noticia');
+        if (mysqli_num_rows($resultado) > 0) {
+            while ($fila = mysqli_fetch_array($resultado)) {
+                echo '<img class="swiper-slide" src="', 'img/noticias/' . $fila[4], '" alt="foto de la categoria ', $fila[1], '">';
+            }
+        }
+        desconectar($conexion);
+        ?>
+
     </div>
     <!-- If we need pagination -->
     <div class="swiper-pagination"></div>
@@ -189,9 +193,6 @@ require_once 'vista/modulos/navTienda.php';
     <!-- If we need scrollbar -->
     <div class="swiper-scrollbar"></div>
 </div>
-
-
-
 
 <section class="contenedor-section-destacados">
     <h2 class="titulo-inicio">Destacados</h2>
@@ -225,7 +226,6 @@ require_once 'vista/modulos/navTienda.php';
 
     </section>
 </section>
-
 
 <section class="contenedor-bloque2">
     <section class="section-envio ctn-servicios">
@@ -281,8 +281,6 @@ require_once 'vista/modulos/navTienda.php';
     </section>
 </section>
 
-
-
 <main id="main-prod">
     <h2 class="titulo-inicio">Productos</h2>
     <section class="ctn-productos" id="ctn-productos">
@@ -298,7 +296,7 @@ require_once 'vista/modulos/navTienda.php';
                 if ($fila[4]=='Sin Stock') {
                     echo '<p class="cartel-sinstock"> SIN STOCK </p>';
                 }
-                echo '<img src="', 'img/productos/',$fila[5], '" alt="foto del producto ', $fila[1], '">';
+                echo '<img loading="lazy" src="', 'img/productos/',$fila[5], '" alt="foto del producto ', $fila[1], '">';
                 echo '<section class="ctn-nomb-precio">';
                 echo '<h4>', $fila[1], '</h4>';
                 echo '<section class="ctn-precio">';
@@ -322,8 +320,6 @@ require_once 'vista/modulos/navTienda.php';
 
     </section>
 </main>
-
-
 
 
 <?php
