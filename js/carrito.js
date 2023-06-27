@@ -127,14 +127,20 @@ btnAgregar.addEventListener('click', (event) => {
             ModalDetalleProd.classList.toggle('show');
             if (response.estado.codigo == 200) {
                 contadorcarritomenu.innerHTML = response.countCarrito;
-                AbrirCarrito();
-                h3not.innerHTML = 'Producto agregado';
+                const noti =  crearPushAgregado(response.prodAgregado);
+                document.body.appendChild(noti);
+                noti.classList.add('show-notiAgregado');
+                setTimeout(function () {
+                  noti.remove();
+              }, 5000);
+                //AbrirCarrito();
+                /*h3not.innerHTML = 'Producto agregado';
                 notification.style.backgroundColor = 'green';
                 bodyNot.innerHTML = 'El producto fue agregado a su carrito';
                 CTNnotification.classList.toggle('show-notificacion');
                 setTimeout(function () {
                     closeNotification();
-                }, 5000);
+                }, 5000);*/
             } else {
                 AbrirCarrito();
                 h3not.innerHTML = 'Producto NO agregado';
@@ -791,6 +797,96 @@ function crearModalCarrito() {
     );
   
     $('body').append(modalCarrito);
+  }
+
+  //FUNCION QUE CREA LA NOTIPUSH DE CUANDO SE AGREGA UN PRODUCTO AL CARRITO
+
+  function crearPushAgregado(prodCarrito) {
+    const section = document.createElement('section');
+    section.classList.add('ctn-noti-agregarCarrito');
+  
+    const closeButton = document.createElement('button');
+    closeButton.classList.add('btn-cerrar-notiAgregarCarrito');
+  
+    const closeIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    closeIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    closeIcon.setAttribute('width', '16');
+    closeIcon.setAttribute('height', '16');
+    closeIcon.setAttribute('fill', 'currentColor');
+    closeIcon.classList.add('bi', 'bi-x-lg');
+    closeIcon.setAttribute('viewBox', '0 0 16 16');
+  
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z');
+  
+    closeIcon.appendChild(path);
+    closeButton.appendChild(closeIcon);
+    section.appendChild(closeButton);
+  
+    const titleSection = document.createElement('section');
+    titleSection.classList.add('ctn-titulo-notiAgregarCarrito');
+  
+    const bagIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    bagIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    bagIcon.setAttribute('fill', 'currentColor');
+    bagIcon.classList.add('bi', 'bi-bag-check');
+    bagIcon.setAttribute('viewBox', '0 0 16 16');
+  
+    const bagPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    bagPath.setAttribute('fill-rule', 'evenodd');
+    bagPath.setAttribute('d', 'M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0z');
+  
+    const bagCheckPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    bagCheckPath.setAttribute('d', 'M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z');
+  
+    bagIcon.appendChild(bagPath);
+    bagIcon.appendChild(bagCheckPath);
+    titleSection.appendChild(bagIcon);
+  
+    const title = document.createElement('h4');
+    title.classList.add('titulo-noti-agregarCarrito');
+    title.textContent = '¡PRODUCTO AGREGADO AL CARRITO!';
+    titleSection.appendChild(title);
+    section.appendChild(titleSection);
+  
+    const productSection = document.createElement('section');
+    productSection.classList.add('ctn-prodRec-agregarCarrito');
+  
+    const image = document.createElement('img');
+    image.setAttribute('src', 'img/productos/' + prodCarrito.producto.imagenes[0]);
+    image.setAttribute('alt', 'foto del producto ' + prodCarrito.producto.nombre);
+  
+    const nameQtySection = document.createElement('section');
+    nameQtySection.classList.add('ctn-nombrecant-notiAgregarCarrito');
+  
+    const productName = document.createElement('p');
+    productName.classList.add('titulo-prod-notiAgregarCarrito');
+    productName.textContent = prodCarrito.producto.nombre;
+  
+    const productQty = document.createElement('p');
+    productQty.textContent = prodCarrito.cantidad + ' Unidades';
+  
+    nameQtySection.appendChild(productName);
+    nameQtySection.appendChild(productQty);
+  
+    productSection.appendChild(image);
+    productSection.appendChild(nameQtySection);
+  
+    section.appendChild(productSection);
+  
+    const viewCartButton = document.createElement('button');
+    viewCartButton.classList.add('btn-vercarrito-noti-agregarCarrito');
+    viewCartButton.textContent = 'Ver Carrito';
+    section.appendChild(viewCartButton);
+    closeButton.addEventListener('click', ()=>{
+      section.remove();
+    });
+    viewCartButton.addEventListener('click', ()=>{
+      AbrirCarrito();
+      section.remove();
+    });
+  
+    return section;
   }
 
 

@@ -31,6 +31,8 @@ const swiper = new Swiper('.swiper', {
     pagination: {
       el: '.swiper-pagination',
     },
+    
+    loop: true,
   
     // Navigation arrows
     navigation: {

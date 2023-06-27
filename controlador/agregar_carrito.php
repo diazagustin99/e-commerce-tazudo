@@ -50,6 +50,7 @@ if (!empty($_POST['idprod']) && !empty($_POST['cant'])) {
             "mensaje" => "Producto agregado",
             "codigo" => 200
             );
+            $respuesta->prodAgregado = $productoCarrito;
         }else {
             $estado = array(
                 "mensaje" => "Producto sin stock o No valido",
