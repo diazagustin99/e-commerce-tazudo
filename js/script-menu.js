@@ -8,7 +8,12 @@ listSubMenu.forEach(ListElement => {
         //submenu.classList.toggle('show');
         let height = 0;
         if (submenu.clientHeight=="0") {
+          submenu.style.display = "block";
             height = submenu.scrollHeight;
+        }else{
+          setTimeout(() => {
+            submenu.style.display = "none";
+          }, 500);
         }
         submenu.style.height = height + "px";
     })
@@ -56,6 +61,10 @@ container.addEventListener('change', ()=>{
 })
 
 document.addEventListener('DOMContentLoaded', ()=>{
+  equalizeCardHeight('#ctn-destacados', '.card-prod-destacado')
+})
+
+window.addEventListener('resize', ()=>{
   equalizeCardHeight('#ctn-destacados', '.card-prod-destacado')
 })
 

@@ -76,7 +76,6 @@ html {
     }
 
     #contenedor-enlaces {
-        position: absolute;
         height: auto;
         width: 100%;
         transform: translate(-100vw);
@@ -105,7 +104,7 @@ html {
         list-style: none;
     }
 
-    ul li a {
+    ul li a { /*REVISAR AQUI EL DISPLAY BLOCK*/
         width: 100%;
         padding: 1rem;
         font-size: 1.5rem;
@@ -132,10 +131,6 @@ html {
         background-color: #ad4800;
     }
 
-    .padre-submenu {
-        overflow: hidden;
-        transition: height .5s;
-    }
 
     /*FIN CSS DE BARRA DE NAVEGACION*/
 
@@ -635,6 +630,7 @@ html {
         border-radius: 0 10px 10px 0;
         padding: 1.5rem;
         box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.3);
+        cursor: pointer;
     }
 
 
@@ -687,7 +683,8 @@ html {
 
     /*ESTILOS DEL MODAL CARRITO*/
 
-    .modal-carrito{
+
+    .ctn-modal-carrito{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -700,6 +697,9 @@ html {
         height: 100vh;
         width: 100vw;
         opacity: 0;
+    }
+    .modal-carrito{
+        width: 100%;
         overflow-y: auto;
     }
 
@@ -847,6 +847,7 @@ html {
         padding: 1.5rem;
         box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.3);
         margin-right: auto;
+        cursor: pointer;
     }
 
     .seguir-comprando-carrito{
@@ -1241,4 +1242,170 @@ html {
 }
 
 
-@media all and (min-width: 720px) {}
+@media all and (min-width: 720px) {
+    #contenedor-menu{
+        height: auto;
+        margin: 0 auto;
+    }
+
+    #abrirmenu{
+        display: none;
+    }
+
+    .top-menu-btns{
+        justify-content: end;
+    }
+
+    #contenedor-enlaces {
+        transform: translate(0);
+        border-radius: 0; 
+        height: 5vh;
+    }
+
+    .enlaces{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+    }
+
+    .enlaces > li{
+        min-width: 25%;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .sub-menu{
+        cursor: pointer;
+        position: absolute;
+        border-radius: 0 0 10px 10px;
+        border: 2px solid #ef6500;
+        border-top: 0;
+        display: none;
+        left: 50%;
+        transform: translate(-50%,0);
+        width: 100%;
+    }
+
+    .sub-menu li{
+        display: block;
+    }
+
+    #contenedor-enlaces{
+        overflow: visible;
+        overflow-y: visible;
+    }
+
+    .ctn-body{
+        width: 60%;
+        margin: 0 auto;
+        padding: 0 1.5rem 0 1.5rem;
+    }
+
+    .card-prod-destacado{
+        min-width: 10vw;
+        font-size: 1.2rem;
+        margin-right: 1.2rem;
+        cursor: pointer;
+    }
+
+    .contenedor-categorias{
+        height: 20vw;
+    }
+
+    .categoria-top{
+        min-width: 20vw;
+        margin-right: 1.2rem;
+        cursor: pointer;
+    }
+
+    .card-prod{
+        width: 30%;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    .section-envio{
+        height: 120px;
+    }
+
+    .titulo-inicio{
+        font-size: 2rem;
+        margin-top: 1rem;
+    }
+
+    footer{
+        padding: 2rem;
+        padding-top: 8%;
+        width: 100%;
+        margin: 0 auto;
+        height: min-content;
+    }
+
+    .logo-footer{
+        max-width: 20%;
+    }
+
+    .redes{
+        width: 80%;
+    }
+
+    .titulo-footer{
+        font-size: 2rem;
+    }
+
+    .red{
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .red > svg{
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+    }
+
+    .modal-detalleProd{
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        background-color: #0000008c;
+    }
+
+    .ctn-prod-detalle{
+        width: 30%;
+        background-color: whitesmoke;
+    }
+
+    .ctn-noti-agregarCarrito{
+        width: 20vw;
+        right: 1rem;
+        left: auto;
+        transform: translate(0, 0);
+    }
+    .show-notiAgregado{
+        bottom: 1rem;
+    }
+
+    .ctn-modal-carrito{
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        background-color: #0000008c;
+    }
+
+    .modal-carrito{
+        width: 30%;
+        background-color: whitesmoke;
+        height: 100vh;
+    }
+
+    button{
+        cursor: pointer;
+    }
+
+    .cantidad-carrito-prod{
+        text-align: center;
+    }
+
+}

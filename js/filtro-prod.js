@@ -15,6 +15,10 @@ ListMenuCat.forEach(ListElement => {
               ctnEnlaces.classList.toggle('show-menu');
               var ctnProductos = document.getElementById('ctn-productos');
               const prodActualizado = crearTarjetasProductos(response.datos);
+              var li = ListElement.parentNode;
+              var contenedor = li.parentNode;
+              contenedor.style.height = '0px';
+              contenedor.style.display = 'none';
               reemplazarElemento(ctnProductos, prodActualizado);
               document.getElementById('main-prod').scrollIntoView({ behavior: 'smooth' });
           },

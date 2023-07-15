@@ -1,5 +1,5 @@
 
-<footer>
+<footer id="footer">
     <section class="ctn-redes-logo">
         <section class="redes">
             <h3 class="titulo-footer">Seguinos en las redes:</h3>
