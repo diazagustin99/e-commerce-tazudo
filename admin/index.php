@@ -5,7 +5,7 @@ if (!empty($_SESSION['usuario'])) {
     header("refresh:0;url=pages/productos.php");
     exit();
 }
-require_once("../vista/modulos/header-admin.php");
+require_once("vista/modulos/header-admin.php");
 require_once("../controlador/conexion.php");
 ?>
 

@@ -12,18 +12,18 @@ require_once("../../controlador/conexion.php");
     <?php require("../vista/modulos/menu-admin.php"); ?>
     <main>
         <header>
-            <h1>PRODUCTOS</h1>
+            <h1>PEDIDOS</h1>
         </header>
         <section class="acciones-admin">
-            <button class="btn-agregar" id="btn-agregarProd">+ Agregar producto</button>
+            <button class="btn-agregar" id="btn-agregarProd">+ Crear un pedido</button>
 
             <section class="filtrar">
                 <form action="" method="get">
-                    <label for="cat">Filtro de categorias:</label>
+                    <label for="cat">Filtro de estado:</label>
                     <select name="categoria" id="cat">
-                        <option value="cat1">Categoria 1</option>
-                        <option value="cat2">Categoria 2</option>
-                        <option value="cat3">Categoria 3</option>
+                        <option value="cat1">Pendiente</option>
+                        <option value="cat2">Ingresado</option>
+                        <option value="cat3">Rechazado</option>
                     </select>
                     <button type="submit" class="btn-filtrar"> Filtrar</button>
                 </form>
@@ -38,66 +38,49 @@ require_once("../../controlador/conexion.php");
             </section>
 
         </section>
-        <section class="contenedor-tabla-prods">
-            <table class="tabla-productos">
-                <thead>
-                    <tr>
-                        <th>
-                            CODIGO
-                        </th>
-                        <th>
-                            PRODUCTO
-                        </th>
-                        <th>
-                            PRECIO PUBLICADO
-                        </th>
-                        <th>
-                            E. OFERTA
-                        </th>
-                        <th>
-                            ESTADO
-                        </th>
-                        <th>
-                            ACCIONES
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $conexion = conectar();
-                    $resultado = mysqli_query($conexion, 'SELECT id_producto, nombre, precio_menor, estado_oferta, estado, foto1  FROM productos');
-                    if (mysqli_num_rows($resultado) > 0) {
-                        while ($fila = mysqli_fetch_array($resultado)) {
-                            if ($fila[3] == 0) {
-                                $estadoOferta = 'OFF';
-                            } else {
-                                $estadoOferta = 'ON';
-                            }
+        <section class="contenedor-pedidos" id="ctn-pedidos">
 
-                            echo '<tr>';
+            <article class="pedido-row">
+                <section class="ctn-infoprim-pedido">
+                    <div class="detalles-pedido">
+                        <p class="titulo-pedido">ID pedido:</p>
+                        <p>TAZ-4J3K3J43K33H3Y</p>
+                    </div>
+                    <div class="detalles-pedido">
+                        <p class="titulo-pedido">Fecha:</p>
+                        <p>29/8/2023-17:16:54</p>
+                    </div>
+                    <div class="detalles-pedido">
+                        <p class="titulo-pedido">Estado:</p>
+                        <p>pendiente de ingresar</p>
+                    </div>
+                </section>
+                <section class="ctn-infosec-pedido">
+                    <div class="info-pedido">
+                        <p class="titulo-infosec">Articulos</p>
+                        <p class="infosec"> 2 </p>
+                        <p class="infoter">  </p>
+                    </div>
+                    <div class="info-pedido">
+                        <p class="titulo-infosec">Total del pedido</p>
+                        <p class="infosec"> $21500 </p>
+                        <p class="infoter">  </p>
+                    </div>
 
-                            echo '<td>', $fila[0], '</td>';
-                            echo '<td class="td-prod">', '<figure><img src="', '../../img/productos/' . $fila[5], '" alt="foto del producto ', $fila[1], '"></figure>';
-                            echo '<p>', $fila[1], '</p></td>';
-                            echo '<td>$', $fila[2], '</td>';
-                            echo '<td class="p-estado">', $estadoOferta, '</td>';
-                            echo '<td class="p-estado">', $fila[4], '</td>';
-                            echo '<td class="contenedor-acciones">', '
-                                <a  class="btn-accion btn-editar" id="' . $fila[0] . '"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                                </svg></a>',
-                            '<a class="btn-accion btn-eliminar" id="' . $fila[0] . '"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                                </svg></a>', '</td>';
+                    <div class="info-pedido">
+                        <p class="titulo-infosec">Medio de pago</p>
+                        <p class="infosec"> efectivo </p>
+                        <p class="infoter"> pendiente </p>
+                    </div>
 
-                            echo '</tr>';
-                        }
-                    }
-                    desconectar($conexion);
-                    ?>
+                    <div class="info-pedido">
+                        <p class="titulo-infosec">Met. de entrega</p>
+                        <p class="infosec"> envio-domicilio </p>
+                        <p class="infoter"> pje. chubut 352 </p>
+                    </div>
+                </section>
+            </article>
 
-                </tbody>
-            </table>
         </section>
     </main>
 
@@ -211,8 +194,7 @@ require_once("../../controlador/conexion.php");
 
 
 <?php
-echo '<script src="../js/modal.js"></script>';
-echo '<script src="../js/modal-eliminarProducto.js"></script>';
+echo '<script src="../js/pedidos-page.js"></script>';
 require_once("../vista/modulos/footer-admin.php");
 
 ?>

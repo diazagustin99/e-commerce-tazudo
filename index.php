@@ -1,11 +1,17 @@
 <?php
+session_start();
+$cantCarrito = 0;
+if (isset($_SESSION['carrito'])) {
+    foreach ($_SESSION['carrito'] as $value) {
+        $cantCarrito = $cantCarrito + $value->cantidad;
+    }
+}
+
 $ruta = 'css';
 $rutajs = 'js';
 $rutalogo = 'img/botones';
-$tituloPagina= 'Tazudo | Queda bien, bien de verdad';
+$tituloPagina= 'Tazudo | Tazas y tazones para Quedar bien, bien de verdad';
 require 'controlador/conexion.php';
-require 'modelo/modeloProducto.php';
-require 'modelo/modeloCategoria.php';
 require_once 'vista/modulos/headerTienda.php';
 require_once 'vista/modulos/navTienda.php';
 ?>

@@ -1,12 +1,4 @@
 <?php
-session_start();
-$cantCarrito = 0;
-if (isset($_SESSION['carrito'])) {
-    foreach ($_SESSION['carrito'] as $value) {
-        $cantCarrito = $cantCarrito + $value->cantidad;
-    }
-}
-
 $conexion = conectar();
 $resultado = mysqli_query($conexion, 'SELECT id_categoria, nombre_categoria FROM categorias');
 desconectar($conexion);

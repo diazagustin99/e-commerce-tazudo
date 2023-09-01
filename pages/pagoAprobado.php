@@ -4,11 +4,14 @@ $rutajs = '../js';
 $rutalogo = '../img/botones';
 $tituloPagina= 'Tazudo | Pago Aprobado';
 require('../vista/modulos/headerTienda.php');
+require('../controlador/conexion.php');
 session_start();
 $id_pedido= $_GET['external_reference'];
 $estado_pago = $_GET['status'];
 $pedido = $_SESSION['pedido'];
 if (isset($estado_pago) && $estado_pago == 'approved') {
+    $conexion = conectar();
+    $resultado = mysqli_query($conexion, 'UPDATE pedidos SET estado_pago = \''. 'Pagado' .'\' WHERE id_pedido =  \''. $pedido->id_pedido .'\'');
     $textEstadoPago = '*estado de pago:* ' . 'APROBADO';
     $textEstadoPago= '%0A' . urlencode($textEstadoPago);
     $urlWSP = $pedido->url . $textEstadoPago;

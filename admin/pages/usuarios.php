@@ -5,11 +5,11 @@ if (empty($_SESSION['usuario']) || $_SESSION['rol'] !== 'administrador') {
     exit();
 }
 $ruta = '../../css';
-require_once("../../vista/modulos/header-admin.php");
+require_once("../vista/modulos/header-admin.php");
 require_once("../../controlador/conexion.php");
 ?>
 <section class="aside-main">
-    <?php require("../../vista/modulos/menu-admin.php"); ?>
+    <?php require("../vista/modulos/menu-admin.php"); ?>
     <main>
         <header>
             <h1>USUARIOS</h1>
@@ -136,5 +136,5 @@ require_once("../../controlador/conexion.php");
 <?php
 
 echo '<script src="../js/modal-CMusers.js"></script>';
-require_once("../../vista/modulos/footer-admin.php");
+require_once("../vista/modulos/footer-admin.php");
 ?>

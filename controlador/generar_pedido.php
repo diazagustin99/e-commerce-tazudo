@@ -16,6 +16,7 @@ if (!empty($_POST['medioPago']) && !empty($_POST['metentrega']) &&!empty($_SESSI
     $pedido->items=$_SESSION['carrito'];
     $pedido->medioPago=$_POST['medioPago'];
     $pedido->metEntrega=$_POST['metentrega'];
+    $pedido->direEntrega= '';
     $pedido->recargo= 0;
     $pedido->subtotal=0;
     $pedido->total=0;
@@ -25,7 +26,7 @@ if (!empty($_POST['medioPago']) && !empty($_POST['metentrega']) &&!empty($_SESSI
         $item= new MercadoPago\Item();
         $item->title=$value->producto->nombre;
         $item->quantity=$value->cantidad;
-        $textItem = '-- ['.$value->cantidad.'] '. $value->producto->nombre.'>';
+        $textItem = '-- ['.$value->cantidad.'] '. $value->producto->nombre.' > ';
         $textItem= '%0A' . urlencode($textItem);
        if ($value->producto->estado_oferta == 1) {
         $item->unit_price=$value->producto->precio_oferta;
@@ -95,7 +96,25 @@ if (!empty($_POST['medioPago']) && !empty($_POST['metentrega']) &&!empty($_SESSI
         unset($_SESSION['carrito']);
     }
     $respuesta->pedido=$pedido;
+    $estado = array(
+        "mensaje" => "Pedido realizado",
+        "codigo" => 200
+        );
     $_SESSION['pedido']=$pedido;
+    $conexion = conectar();
+    $resultado = mysqli_query($conexion, 'INSERT INTO pedidos(id_pedido, met_entrega, medio_pago, estado_pago, estado_pedido, direccion_entrega, recargo) VALUES (\''.$pedido->id_pedido.'\', \''.$pedido->metEntrega.'\', \''. $pedido->medioPago .'\', \''. 'pendiente' .'\', \''.'pendiente de ingresar'.'\', \''.$pedido->direEntrega.'\', \''.$pedido->recargo.'\')');
+    if ($resultado) {
+        foreach ($pedido->items as $value) {
+            if ($value->producto->estado_oferta == 1) {
+                $resultado = mysqli_query($conexion, 'INSERT INTO detalle_pedidos(id_detalle, id_pedido, id_producto, cantidad, precio_unidad) VALUES (\''.uniqid("DP-").'\', \''.$pedido->id_pedido.'\', \''. $value->producto->id_producto .'\', \''. $value->cantidad .'\', \''.$value->producto->precio_oferta.'\')');
+               }else{
+                $resultado = mysqli_query($conexion, 'INSERT INTO detalle_pedidos(id_detalle, id_pedido, id_producto, cantidad, precio_unidad) VALUES (\''.uniqid("DP-").'\', \''.$pedido->id_pedido.'\', \''. $value->producto->id_producto .'\', \''. $value->cantidad .'\', \''.$value->producto->precio_menor.'\')');
+               }
+            
+        }
+    }
+    desconectar($conexion);    
+
 }else{
     $respuesta->pedido=NULL;
     $estado = array(

@@ -641,5 +641,74 @@ input[type="text"]:focus, input[type="password"]:focus{
     cursor: pointer;
     color: #ef6500;
   }
+
+  .contenedor-pedidos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+  }
+
+  .pedido-row{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-top: 1rem;
+    background-color: whitesmoke;
+  }
+
+  .ctn-infoprim-pedido{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    min-height: 100%;
+    width: 30%;
+    background-color: #ecdd55;
+    padding: 1rem;
+  }
+
+  .detalles-pedido{
+    margin-top: 0.4rem;
+  }
+
+  .titulo-pedido, .infoter{
+    font-size: 0.8rem;
+  }
+
+  .ctn-infosec-pedido{
+    display: flex;
+    flex-direction: row;
+    min-height: 100%;
+    max-height: 100%;
+    width: 70%;
+    padding: 1rem;
+  }
+
+  .info-pedido{
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-left: 1rem;
+    text-align: center;
+    flex: 1;
+    border-right: #ef6500 dotted 2px;
+    color: #ef6500;
+  }
+
+  .titulo-infosec{
+    font-size: 1.2rem;
+    font-weight: bolder;
+    min-height: 33%;
+  }
+
+  .infosec{
+    font-size: 1.2rem;
+  }
 }
 

@@ -31,7 +31,7 @@ var tsc = 0;
 
 
 
-btnPrincipalCarrito.addEventListener('click', (event) => {
+btnPrincipalCarrito.addEventListener('click', async (event) => {
     var btn = event.target;
     var loader = CrearLoader();
     if (btnPrincipalCarrito.textContent == 'Iniciar compra') {
@@ -48,7 +48,8 @@ btnPrincipalCarrito.addEventListener('click', (event) => {
                 var metentrega = $('input[name=metentrega]:checked').val();
                 if (medioPago!= null && metentrega!=null) {                    
                     btn.appendChild(loader);
-                    realizarPedido();
+                     await realizarPedido();
+                    loader.remove();
                 }
             }
         }
@@ -293,39 +294,42 @@ function closeNotification() {
     CTNnotification.classList.remove('show-notificacion');
 }
 
-function realizarPedido() {
-    $("button").prop("disabled", true);
-    var medioPago = $('input[name=medioPago]:checked').val();
-    var metentrega = $('input[name=metentrega]:checked').val();
-    var formData = {
-        medioPago: medioPago,
-        metentrega: metentrega,
-        direccionEntrega: InputDireccionElement.value
-    }
-    $.ajax({
-        type: 'POST',
-        url: 'controlador/generar_pedido.php',
-        data: formData,
-        success: function (response) {
-            // Procesar la respuesta del servidor en caso de éxito
-            console.log(response);
-            if (medioPago == 'tarjetas') {
-                var linkPago = response.pedido.linkPago;
-                //Redirecciona automáticamente a MercadoPago
-                window.location.href = linkPago;
-            } else {
-                var urlWP = response.pedido.url;
-                //Redirecciona automáticamente a a wsp
-                window.location.href = urlWP;
-            }
-            $("button").prop("disabled", false);
-        },
-        error: function (xhr, status, error) {
-            // Manejar errores de la petición
-            console.log(error);
-            $("button").prop("disabled", false);
-        }
-    });
+async function realizarPedido() {
+  $("button").prop("disabled", true);
+  var medioPago = $('input[name=medioPago]:checked').val();
+  var metentrega = $('input[name=metentrega]:checked').val();
+  var formData = {
+      medioPago: medioPago,
+      metentrega: metentrega,
+      direccionEntrega: InputDireccionElement.value
+  };
+
+  try {
+      const response = await $.ajax({
+          type: 'POST',
+          url: 'controlador/generar_pedido.php',
+          data: formData,
+      });
+
+      // Procesar la respuesta del servidor en caso de éxito
+      console.log(response);
+      if (medioPago == 'tarjetas') {
+          var linkPago = response.pedido.linkPago;
+          //Redirecciona automáticamente a MercadoPago
+          window.location.href = linkPago;
+      } else {
+          var urlWP = response.pedido.url;
+          //Redirecciona automáticamente a a wsp
+          window.location.href = urlWP;
+      }
+
+  } catch (error) {
+      // Manejar errores de la petición
+      console.log(error);
+  } finally {
+      // Asegurarse de que el botón se habilite nuevamente, independientemente de si hay éxito o error.
+      $("button").prop("disabled", false);
+  }
 }
 
 function btnsCantidad() {
